@@ -24,10 +24,10 @@
                         <Binding Path="CountText"/>
                         
                         <!-- This works -->
-                        <!-- <Binding Path="Count" Converter="{StaticResource IntToObjectConverter}"/> -->
+                        <Binding Path="Count" Converter="{StaticResource IntToObjectConverter}"/>
                         
                         <!-- This does not work -->
-                        <Binding Path="Count" Converter="{StaticResource IntToStringConverter}"/>
+                        <!-- <Binding Path="Count" Converter="{StaticResource IntToStringConverter}"/> -->
                     </MultiBinding>
                 </Label.Text>
             </Label>
