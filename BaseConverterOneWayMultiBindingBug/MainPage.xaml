@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:app="clr-namespace:BaseConverterOneWayMultiBindingBug"
+             x:Class="BaseConverterOneWayMultiBindingBug.MainPage"
+             x:DataType="app:MainPageViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <app:IntToStringConverter x:Key="IntToStringConverter" />
+            <app:IntToObjectConverter x:Key="IntToObjectConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,30"
+            Spacing="25">
+   
+            <!-- Multibinding: BaseConverterOneWay does not work with other ToType = string -->
+            <Label HorizontalOptions="Center">
+                <Label.Text>
+                    <MultiBinding StringFormat="{}Multibinding: {0} {1}" Mode="OneWay">
+                        <Binding Path="CountText"/>
+                        
+                        <!-- This works -->
+                        <!-- <Binding Path="Count" Converter="{StaticResource IntToObjectConverter}"/> -->
+                        
+                        <!-- This does not work -->
+                        <Binding Path="Count" Converter="{StaticResource IntToStringConverter}"/>
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+            
+            <!-- Regular binding: BaseConverterOneWay with ToType = string works as expected -->
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="Regular binding: "/>
+                <Label Text="{Binding CountText}"/>
+                <Label Text="{Binding Count, Converter={StaticResource IntToStringConverter}}"/>
+            </HorizontalStackLayout>
+    
+            <Button
+                Text="Click me" 
+                Command="{Binding CounterClickCommand}"
+                HorizontalOptions="Fill" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
